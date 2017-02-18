@@ -1,34 +1,50 @@
 import React, {Component} from 'react';
-import {Container, Grid, Divider, Label, Button, Input} from 'semantic-ui-react';
+import {Container, Grid, Divider, Label, Button} from 'semantic-ui-react';
 
 
 class TodoApp extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            txt1: 'E.' + Math.ceil(1000 * Math.random())
-        };
-    }
-
-    handleClick = (e) => {
+    componentWillMount() {
         const {store} = this.props;
-        const v4 = require('uuid/v4');
-
-        let random = 'E.' + Math.ceil(1000 * Math.random());
 
         //callback after action
         store.subscribe(() => {
-            this.setState({txt1: random});
-            this.refs.rTxt1.value = random;
+            this.setState({});
         });
+    }
+
+    componentWillUpdate(prevProps) {
+        if (this.refs.rTxt1.value === 'undefined') {
+            this.refs.rTxt1.value = 'E.' + Math.ceil(1000 * Math.random());
+        }
+    }
+
+
+    handleClick = () => {
+        const {store} = this.props;
+        const v4 = require('uuid/v4');
 
         console.log("BEFORE", store.getState());
 
         store.dispatch({
             type: 'ADD_TODO',
             id: v4(),
-            text: e
+            text: this.refs.rTxt1.value
+        });
+        console.log("AFTER", store.getState());
+
+        this.refs.rTxt1.value = undefined;
+
+    };
+
+    onTodoClick = (id) => {
+        const {store} = this.props;
+
+        console.log("BEFORE", store.getState());
+
+        store.dispatch({
+            type: 'TOGGLE_TODO',
+            id
         });
 
         console.log("AFTER", store.getState());
@@ -41,10 +57,12 @@ class TodoApp extends Component {
                     <Divider/>
                     <Grid centered columns={2}>
                         <Grid.Column>
-                            <Input ref='rTxt1' type='text' defaultValue={this.state.txt1} />
-                            <span style={{width:'5px', display: 'inline-block'}}/>
-                            <Button name="btnAddTodo" onClick={this.handleClick.bind(null, this.state.txt1)}>
-                                AddTodo - {this.state.txt1}
+                            <div className="ui input">
+                                <input ref='rTxt1' type='text' defaultValue={'E.' + Math.ceil(1000 * Math.random())}/>
+                            </div>
+                            <span style={{width: '5px', display: 'inline-block'}}/>
+                            <Button name="btnAddTodo" onClick={this.handleClick.bind(this)}>
+                                AddTodo
                             </Button>
                         </Grid.Column>
                     </Grid>
@@ -54,7 +72,8 @@ class TodoApp extends Component {
                         <Grid.Column>
                             <Label.Group tag>
                                 {this.props.store.getState().map((x) =>
-                                    <Label as='a' style={{textDecoration: x.completed ? 'line-through' : 'none'}} key={x.id}>{x.text}</Label>
+                                    <Label as='a' onClick={() => this.onTodoClick(x.id)} style={{textDecoration: x.completed ? 'line-through' : 'none'}}
+                                           key={x.id}>{x.text}</Label>
                                 )}
                             </Label.Group>
                         </Grid.Column>
@@ -64,5 +83,6 @@ class TodoApp extends Component {
         )
     }
 }
+
 
 export default TodoApp;
