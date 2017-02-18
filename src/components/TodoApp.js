@@ -71,7 +71,7 @@ class TodoApp extends Component {
                     <Grid centered columns={2}>
                         <Grid.Column>
                             <Label.Group tag>
-                                {this.props.store.getState().map((x) =>
+                                {this.props.store.getState().todos.map((x) =>
                                     <Label as='a' onClick={() => this.onTodoClick(x.id)} style={{textDecoration: x.completed ? 'line-through' : 'none'}}
                                            key={x.id}>{x.text}</Label>
                                 )}
