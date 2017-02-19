@@ -4,7 +4,8 @@ import {Button} from 'semantic-ui-react';
 class AddTodo extends Component {
 
     render() {
-        const {onAddClick} = this.props
+        const {store} = this.props;
+        const v4 = require('uuid/v4');
         let input;
 
         return (
@@ -19,7 +20,11 @@ class AddTodo extends Component {
                 </div>
                 <span style={{width: '5px', display: 'inline-block'}}/>
                 <Button name="btnAddTodo" onClick={() => {
-                    onAddClick(input.value);
+                    store.dispatch({
+                        type: 'ADD_TODO',
+                        id: v4(),
+                        text: input.value
+                    });
                     input.value = 'E.' + Math.ceil(1000 * Math.random());
                 }}>
                     AddTodo
