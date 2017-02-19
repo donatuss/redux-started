@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Container, Grid, Divider, Button} from 'semantic-ui-react';
+import {Container, Grid, Divider} from 'semantic-ui-react';
 
-import FilterLink from '../containers/FilterLink';
+import AddTodo from '../containers/AddTodo';
 import TodoList from './TodoList';
+import Footer from './Footer';
 
 class TodoApp extends Component {
 
@@ -11,11 +12,11 @@ class TodoApp extends Component {
 
         //callback after action
         store.subscribe(() => {
-            this.setState({});
+            this.forceUpdate();
         });
     }
 
-    handleClick = () => {
+    onAddClick = (val) => {
         const {store} = this.props;
         const v4 = require('uuid/v4');
 
@@ -23,10 +24,9 @@ class TodoApp extends Component {
         store.dispatch({
             type: 'ADD_TODO',
             id: v4(),
-            text: this.refs.rTxt1.value
+            text: val
         });
         console.log("AFTER", store.getState());
-        this.refs.rTxt1.value = 'E.' + Math.ceil(1000 * Math.random());
 
     };
 
@@ -40,6 +40,17 @@ class TodoApp extends Component {
         });
         console.log("AFTER", store.getState());
     };
+
+    onFilterClick = (filter) => {
+        const {store} = this.props;
+        console.log("BEFORE", store.getState());
+        store.dispatch({
+            type: 'SET_VISIBILITY_FILTER',
+            filter
+        });
+        console.log("AFTER", store.getState());
+    };
+
 
     getVisibleTodos = (todos, filter) => {
         switch (filter) {
@@ -71,22 +82,12 @@ class TodoApp extends Component {
                     <Divider/>
                     <Grid centered columns={2}>
                         <Grid.Column>
-                            <FilterLink {...this.props} filter='SHOW_ALL' currentFilter={visibilityFilter}>All</FilterLink>
-                            <span style={{width: '5px', display: 'inline-block'}}/>
-                            <FilterLink {...this.props} filter='SHOW_ACTIVE' currentFilter={visibilityFilter}>Active</FilterLink>
-                            <span style={{width: '5px', display: 'inline-block'}}/>
-                            <FilterLink {...this.props} filter='SHOW_COMPLETED' currentFilter={visibilityFilter}>Competed</FilterLink>
+                            <Footer onFilterClick={this.onFilterClick} visibilityFilter={visibilityFilter}/>
                         </Grid.Column>
                     </Grid>
                     <Grid centered columns={2} style={{position: 'relative', top: '-15px'}}>
                         <Grid.Column>
-                            <div className="ui input">
-                                <input ref='rTxt1' type='text' defaultValue={'E.' + Math.ceil(1000 * Math.random())}/>
-                            </div>
-                            <span style={{width: '5px', display: 'inline-block'}}/>
-                            <Button name="btnAddTodo" onClick={this.handleClick.bind(this)}>
-                                AddTodo
-                            </Button>
+                            <AddTodo onAddClick={this.onAddClick}/>
                         </Grid.Column>
                     </Grid>
                 </Container>
