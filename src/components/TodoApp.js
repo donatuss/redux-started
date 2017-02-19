@@ -41,16 +41,6 @@ class TodoApp extends Component {
         console.log("AFTER", store.getState());
     };
 
-    onFilterClick = (filter) => {
-        const {store} = this.props;
-        console.log("BEFORE", store.getState());
-        store.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            filter
-        });
-        console.log("AFTER", store.getState());
-    };
-
 
     getVisibleTodos = (todos, filter) => {
         switch (filter) {
@@ -82,7 +72,7 @@ class TodoApp extends Component {
                     <Divider/>
                     <Grid centered columns={2}>
                         <Grid.Column>
-                            <Footer onFilterClick={this.onFilterClick} visibilityFilter={visibilityFilter}/>
+                            <Footer store={this.props.store}/>
                         </Grid.Column>
                     </Grid>
                     <Grid centered columns={2} style={{position: 'relative', top: '-15px'}}>

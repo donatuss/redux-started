@@ -1,22 +1,25 @@
 import React, {Component} from 'react';
-import {Button, Icon} from 'semantic-ui-react';
+
+import Link from '../components/Link';
 
 class FilterLink extends Component {
 
     render() {
-        const {filter, currentFilter, onFilterClick} = this.props;
-
-        if (filter === currentFilter) {
-            return <Button active size="small"><Icon name='checkmark'/>{this.props.children}<Icon /></Button>
-        }
+        const {filter, store, children} = this.props;
+        const state = store.getState();
 
         return (
-            <a href='#' onClick={e => {
-                e.preventDefault();
-                onFilterClick(filter);
-            }}>
-                <Button size="small"><Icon/>{this.props.children}<Icon /></Button>
-            </a>
+            <Link
+                active={
+                    filter === state.visibilityFilter
+                }
+                onClick={() => {
+                    store.dispatch({
+                        type: 'SET_VISIBILITY_FILTER',
+                        filter
+                    });
+                }}
+            >{children}</Link>
         )
     };
 }
