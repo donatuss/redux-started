@@ -1,5 +1,3 @@
-import {combineReducers} from 'redux';
-
 const todo = (state, action) => {
     switch (action.type) {
         case 'ADD_TODO':
@@ -43,6 +41,21 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
         default:
             return state;
     }
+};
+
+const combineReducers = (reducers) => {
+    return (state = {}, action) => {
+        return Object.keys(reducers).reduce(
+            (totalState, key) => {
+                totalState[key] = reducers[key](
+                    state[key],
+                    action
+                );
+                return totalState;
+            },
+            {}
+        );
+    };
 };
 
 const todoApp = combineReducers({
