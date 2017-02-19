@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Container, Grid, Divider, Label, Button} from 'semantic-ui-react';
+import {Container, Grid, Divider, Button} from 'semantic-ui-react';
 
-import FilterLink from '../containers/FilterLink'
+import FilterLink from '../containers/FilterLink';
+import TodoList from './TodoList';
 
 class TodoApp extends Component {
 
@@ -92,12 +93,7 @@ class TodoApp extends Component {
                 <Container>
                     <Grid centered columns={2}>
                         <Grid.Column>
-                            <Label.Group tag>
-                                {visibleTodos.map((x) =>
-                                    <Label as='a' onClick={() => this.onTodoClick(x.id)} style={{textDecoration: x.completed ? 'line-through' : 'none'}}
-                                           key={x.id}>{x.text}</Label>
-                                )}
-                            </Label.Group>
+                            <TodoList todos={visibleTodos} onTodoClick={this.onTodoClick}/>
                         </Grid.Column>
                     </Grid>
                 </Container>
