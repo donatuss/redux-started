@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Container, Grid, Divider, Label, Button} from 'semantic-ui-react';
 
+import FilterLink from '../containers/FilterLink'
 
 class TodoApp extends Component {
 
@@ -18,14 +19,12 @@ class TodoApp extends Component {
         const v4 = require('uuid/v4');
 
         console.log("BEFORE", store.getState());
-
         store.dispatch({
             type: 'ADD_TODO',
             id: v4(),
             text: this.refs.rTxt1.value
         });
         console.log("AFTER", store.getState());
-
         this.refs.rTxt1.value = 'E.' + Math.ceil(1000 * Math.random());
 
     };
@@ -34,21 +33,51 @@ class TodoApp extends Component {
         const {store} = this.props;
 
         console.log("BEFORE", store.getState());
-
         store.dispatch({
             type: 'TOGGLE_TODO',
             id
         });
-
         console.log("AFTER", store.getState());
     };
 
+    getVisibleTodos = (todos, filter) => {
+        switch (filter) {
+            case 'SHOW_ALL':
+                return todos;
+            case 'SHOW_COMPLETED':
+                return todos.filter(
+                    t => t.completed
+                );
+            case 'SHOW_ACTIVE':
+                return todos.filter(
+                    t => !t.completed
+                );
+            default:
+                return todos;
+        }
+    };
+
     render() {
+        const {todos, visibilityFilter} = this.props.store.getState();
+        const visibleTodos = this.getVisibleTodos(
+            todos,
+            visibilityFilter,
+        );
+
         return (
             <div>
                 <Container fluid>
                     <Divider/>
                     <Grid centered columns={2}>
+                        <Grid.Column>
+                            <FilterLink {...this.props} filter='SHOW_ALL' currentFilter={visibilityFilter}>All</FilterLink>
+                            <span style={{width: '5px', display: 'inline-block'}}/>
+                            <FilterLink {...this.props} filter='SHOW_ACTIVE' currentFilter={visibilityFilter}>Active</FilterLink>
+                            <span style={{width: '5px', display: 'inline-block'}}/>
+                            <FilterLink {...this.props} filter='SHOW_COMPLETED' currentFilter={visibilityFilter}>Competed</FilterLink>
+                        </Grid.Column>
+                    </Grid>
+                    <Grid centered columns={2} style={{position: 'relative', top: '-15px'}}>
                         <Grid.Column>
                             <div className="ui input">
                                 <input ref='rTxt1' type='text' defaultValue={'E.' + Math.ceil(1000 * Math.random())}/>
@@ -64,7 +93,7 @@ class TodoApp extends Component {
                     <Grid centered columns={2}>
                         <Grid.Column>
                             <Label.Group tag>
-                                {this.props.store.getState().todos.map((x) =>
+                                {visibleTodos.map((x) =>
                                     <Label as='a' onClick={() => this.onTodoClick(x.id)} style={{textDecoration: x.completed ? 'line-through' : 'none'}}
                                            key={x.id}>{x.text}</Label>
                                 )}
