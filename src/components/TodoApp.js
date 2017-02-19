@@ -13,13 +13,6 @@ class TodoApp extends Component {
         });
     }
 
-    componentWillUpdate(prevProps) {
-        if (this.refs.rTxt1.value === 'undefined') {
-            this.refs.rTxt1.value = 'E.' + Math.ceil(1000 * Math.random());
-        }
-    }
-
-
     handleClick = () => {
         const {store} = this.props;
         const v4 = require('uuid/v4');
@@ -33,7 +26,7 @@ class TodoApp extends Component {
         });
         console.log("AFTER", store.getState());
 
-        this.refs.rTxt1.value = undefined;
+        this.refs.rTxt1.value = 'E.' + Math.ceil(1000 * Math.random());
 
     };
 
