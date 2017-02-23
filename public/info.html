@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="description" content="Redux001.Ex01:The Single Immutable State Tree">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+    <title>Redux Started Course</title>
+</head>
+<script>
+    function openInNewTab(url) {
+        var win = window.open(url, '_blank');
+        win.focus();
+    }
+</script>
+<body>
+
+<div style="margin-top: 40px" class="ui container">
+
+    <div class="ui top attached tabular menu">
+        <a class="item" id="tab1">
+            Ch 01-08
+        </a>
+        <a class="item" id="tab2">
+            Ch 09-11
+        </a>
+        <a class="item" id="tab3">
+            Ch 12-13
+        </a>
+        <a class="item active" id="tab4">
+            Ch 14-16
+        </a>
+    </div>
+
+    <div class="ui bottom attached tab segment tab1">
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">01 The Single Immutable State Tree</div>
+            <hr style="border: solid thin gainsboro"/>
+        </h3>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/cenuzak/3/edit?html,js,console,output')">Ex01 Single Counter</a></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/cekafa/2/edit?html,js,console,output')">Ex02 Complex Application</a></div>
+        <div style="margin-top: 10px"></div>
+        <p><span class="ui label gray">Pierwsza zasada reduxa</span> - cały stan aplikacji jest reprezentowany przez jeden obiekt JavaScript.</p>
+        <p>Wszystkie zmiany i przekształcenia aplikacji są jawne i bezpośrednie. Te przekształcenia które zawierają dane i wpływają na stan UI
+            są zawarte w pojedynczym obiekcie który nazywamy <span class="ui label">state</span> lub<span class="ui label">state tree</span>.
+            Ponieważ cały stan jest reprezentowany przez pojedynczy obiekt, jesteśmy w stanie śledzić każdą zmianę aplikacji w czasie.
+        </p>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">02 Describing State Changes with Actions</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/memuvo/2/edit?html,js,console,output')">Ex01 Complex Application</a></div>
+        <div style="margin-top: 10px"></div>
+        <div>
+            <p><span class="ui label gray">Druga zasada reduxa</span> – <span class="ui label">state tree</span> jest read only.</p>
+            <p>Każdorazowo kiedy ma się dokonać zmiana stanu należy wyzwolić akcję (dispatch). Zmiany stanu są opisywane przez akcje.
+                Akcja to zwykły obiekt JS opisujący co zmieniło się w aplikacji. I o ile state jest minimalną reprezentacją danych aplikacji o tyle akcja jest minimalną
+                reprezentacją
+                zmiany tych danych.</p>
+        </div>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">03 Pure and Impure Functions</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/koqedif/edit?html,js,console')">Ex01 Pure Impure</a></div>
+        <div style="margin-top: 10px"></div>
+        <div>
+            <p>Pure Function – taka funkcja której zwracana wartośc zależy tylko i wyłacznie od jej argumentów wejściowych.
+                Nie wywołuje w sobie żadnych zewnętrznych elementów np. bazy danych czy usług. Funcja nie modyfikuje również własnych argumentów wejsciowych.</p>
+        </div>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">04 The Reducer Function</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div style="margin-top: 10px"></div>
+        <div>
+            <p>Aplikacje reduxowe muszą implementować funkcie reducer. To funkcje które przeliczają następny state bazując na poprzednim state i na wyzwalanej akcji.
+                <span class="ui label gray">Trzecia zasada reduxa</span> - Aby opisać zmiany stanu należy napisać funkcję pobierającą poprzedni stan oraz akcję która
+                zainicjalizowała tą zmianę i
+                zwraca następny stan aplikacji. Taka funkcje nazywamy reducer</p>
+        </div>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">05 Writing a Counter Reducer</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/jusufun/edit?html,js,console')">Ex01 Counter Reducer</a></div>
+        <div style="margin-top: 10px"></div>
+        <div>
+            <p>Pisząc reducer, w początkowej fazie state może być nie zdefiniowany i wówczas zwracamy obiekt reprezentujący stan początkowy. W przykładzie z licznikem
+                zwracamy 0. W momencie wyzwolenia akcji i jeżeli jest to akcja rozpoznawalna przez reducer stan ulega zmianie</p>
+        </div>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">06 Store Methods: getState(), dispatch(), and subscribe()</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/qoqiyot/edit?html,js,console,output')">Ex01 getState dispatch subscribe</a></div>
+        <div style="margin-top: 10px"></div>
+        <div>
+            Store wiąże ze sobą 3 zasady Reduxa.
+            <ul>
+                <li>Przechowuje bieżący obiekt stanu aplikacji – state</li>
+                <li>Pozwala na wyzwolenie akcji</li>
+                <li>W momencie jego tworzenia należy zdefiniować funkcje reducer które odpowiadają za aktualizacje stanu poprzez akcje.</li>
+            </ul>
+
+            Store ma 3 ważne metody:
+            <ul>
+                <li><span class="ui label gray">getState()</span> – zwraca bieżący stan reduxowego store</li>
+                <div style="margin-top: 5px"></div>
+                <li><span class="ui label gray">dispatch()</span> – najczęściej używana, wyzwala akcję mającej na celu zmianę stanu aplikacji</li>
+                <div style="margin-top: 5px"></div>
+                <li><span class="ui label gray">subscribe()</span> – rejestruje callback który store reduxa będzie się wywoływał każdorazowo gdy wyzwalana będzie akcja –
+                    co umożliwia zaktualizowanie UI aplikacji aby odzwierciedlić bieżący stan aplikacji
+                </li>
+            </ul>
+
+        </div>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">07 Implementing Store from Scratch</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/copunan/edit?html,js,console,output')">Ex01 Store from Scratch</a></div>
+        <div style="margin-top: 10px"></div>
+        <div>
+            <p>W przykładzie zaimplementowany od zera reduxowy store.</p>
+        </div>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">08 React Counter Example</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/simeyoq/edit?html,js,output')">Ex01 React Counter Example</a></div>
+        <div style="margin-top: 10px"></div>
+        <div>
+            <p>W przykładzie zaimplementowany w oparciu o Reacta i Reduxowego stora przykład licznika.</p>
+        </div>
+
+    </div>
+
+    <div class="ui bottom attached tab segment tab2">
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">09. Avoiding Array Mutations</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/dewomu/edit?js,console,output')">Ex01 Add Element to Array</a></div>
+        <div>
+            <p>Dodawanie elementów do tablicy bez jej zmiany - <code>[...list, element]</code>. Przykład pokazuje jak napisać funkcję która nie zmieni wejściowego obiektu
+                tablicy,
+                natomiast zwróci zmodyfikowaną zmienioną tablicę w oparciu o orginalny obiekt</p>
+        </div>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/bejula/edit?js,console,output')">Ex02 Remove Element from Array</a></div>
+        <div>
+            <p>Usuwanie elementów z tablicy bez jej zmiany - <code>...list.slice(0, index), ...list.slice(index + 1)</code>.
+                Przykład pokazuje jak napisać funkcję która nie zmieni wejściowego obiektu tablicy,
+                natomiast zwróci zmodyfikowaną zmienioną tablicę w oparciu o orginalny obiekt i indeks elemetu który ma zostać usuniety.</p>
+        </div>
+        <div style="margin-top: 10px"></div>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/yapekiw/4/edit?html,js,console,output')">Ex03 Increament Specific Element in Array</a></div>
+        <div>
+            <p>ZMiana elementów w tablicy bez jej zmiany - <code>return [...list.slice(0, index), list[index] + 1, ...list.slice(index + 1)]</code>.
+                Przykład pokazuje jak napisać funkcję która nie zmieni wejściowego obiektu tablicy,
+                natomiast zwróci zmodyfikowaną zmienioną tablicę w oparciu o orginalny obiekt i indeks elemetu który ma zostać zmieniony.</p>
+        </div>
+
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">10. Avoiding Object Mutations</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/jiyoxaj/edit?js,console,output')">Ex01 Object Mutations</a></div>
+        <div>
+            <p>Modyfikowanie elementami obiektu - Przykład pokazuje jak napisać funkcję która nie zmieni wejściowego obiektu,
+                natomiast na jego bazie zbuduje nowy obiekt </p>
+            <pre style="background-color: #efefef; font-size: smaller; width: 50%">
+
+            const toggleTodoGood = (todo) => {
+              return {
+                  id: Math.ceil(10000 * Math.random()),
+                  text: todo.text,
+                  completed: !todo.completed
+              };
+            };
+
+            const toggleTodoGoodAssign = (todo) => {
+              return Object.assign({}, todo, {
+                  id: Math.ceil(10000 * Math.random()),
+                  completed: !todo.completed
+              });
+            };
+
+            const toggleTodoGoodES7 = (todo) => {
+              return {
+                ...todo,
+                id: Math.ceil(10000 * Math.random()),
+                completed: !todo.completed
+              }
+            };
+            </pre>
+        </div>
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">11. Writing a Todo List Reducer (Adding a Todo)</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/cebehod/edit?html,js,console,output')">Ex01 Todo Reducer</a></div>
+        <div>
+            <p>Reducer todo - Przykład reducera todos (Add Todo). Bedzie wykorzytywany w tworzonej aplikacji</p>
+            <pre style="background-color: #efefef; font-size: smaller; width: 50%">
+
+            const todos = (state = [], action) => {
+              switch (action.type) {
+                case 'ADD_TODO':
+                    return [
+                       ...state,
+                      {
+                        id: action.id,
+                        text: action.text,
+                        completed: false
+                      }
+                    ];
+                default:
+                  return state;
+              }
+            };
+
+            const addTodo = (txt) => {
+              todos(state, {
+                type: 'ADD_TODO',
+                id: Math.ceil(1000 * Math.random()),
+                text: txt
+              });
+            }
+
+            </pre>
+        </div>
+
+    </div>
+
+    <div class="ui bottom attached tab segment tab3">
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">12. Writing a Todo List Reducer (Toggle Todo)</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div><a href="javascript:openInNewTab('https://jsbin.com/porazor/edit?html,js,output,console')">Ex01 Todo Reducer Toggle (jsbin)</a></div>
+        <div><a href="javascript:openInNewTab('https://fiddle.jshell.net/donatuss2/bx39z7br/')">Ex01 Todo Reducer Toggle (fiddle)</a></div>
+        <div>
+            <p>Reducer todo - Przykład reducera todos (Toggle Todo). Bedzie wykorzytywany w tworzonej aplikacji</p>
+            <pre style="background-color: #efefef; font-size: smaller; width: 50%">
+
+            const todos = (state = [], action) => {
+              switch (action.type) {
+                case 'ADD_TODO':
+                    return [
+                       ...state,
+                      {
+                        id: action.id,
+                        text: action.text,
+                        completed: false
+                      }
+                    ];
+                case 'TOGGLE_TODO':
+                   return state.map(x => {
+                        if(x.id !== action.id){
+                        return x;
+                      } else {
+                        return {
+                            ...x,
+                          completed: !x.completed
+                        };
+                        }
+                   });
+                default:
+                  return state;
+              }
+            };
+
+            </pre>
+        </div>
+
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">13. Reducer Composition with Array</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div><a href="javascript:openInNewTab('https://fiddle.jshell.net/donatuss2/hvpnt963/')">Ex01 Todo Reducer Toggle</a></div>
+        <div>
+            <p>Kompozycja funkcji reducer. W poprzednich przykładach operujemy na obiekcie state będącym tablicą. Wprowadza to pewne utrudnienie gdyż modyfikujemy zarówno
+                tablicę jak i indywidualny obiekt.
+                W tym przykładzie stworzymy oddzielną funkcję operującą na pojedynczym obiekcie – stworzymy go (add todo) i zmodyfikujemy (toggle todo)- skupiając się na
+                istotnych elementach separując kod. Następnie wykorzystamy tą funkcję w funkcji reducer. Takie podejście nazywamy kompozycją reducera
+            </p>
+
+            <pre style="background-color: #efefef; font-size: smaller; width: 50%">
+
+            const todos = (state = [], action) => {
+              switch (action.type) {
+                case 'ADD_TODO':
+                    return [
+                       ...state,
+                      todo(undefined, action)
+                    ];
+                case 'TOGGLE_TODO':
+                   return state.map(x => todo(x, action));
+                default:
+                  return state;
+              }
+            };
+
+            const todo = (state, action) => {
+                switch (action.type) {
+                case 'ADD_TODO':
+                    return {
+                        id: action.id,
+                        text: action.text,
+                        completed: false
+                      };
+                case 'TOGGLE_TODO':
+                   if(state.id !== action.id){
+                        return state;
+                   }
+                   return {
+                            ...x,
+                        completed: !x.completed
+                    };
+
+                default:
+                  return state;
+              }
+            };
+
+            </pre>
+        </div>
+    </div>
+
+    <div class="ui bottom attached tab segment active tab4">
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">14. Reducer Composition with Object</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div>
+            <p>Kompozycja funkcji reducer. Dodano dodatkowy reducer visibilityFilter, a następnie złożono 2 funkcje reducer todos, visibilityFilter w jeden todoApp</p>
+            <pre style="background-color: #efefef; font-size: smaller; width: 80%">
+
+            const todos = (state = [], action) => {
+                switch (action.type) {
+                    case 'ADD_TODO':
+                        return [
+                            ...state,
+                            todo(undefined, action)
+                        ];
+                    case 'TOGGLE_TODO':
+                        return state.map(x => todo(x, action));
+                    default:
+                        return state;
+                }
+            };
+
+            const visibilityFilter = (state = 'SHOW_ALL', action) => {
+                switch (action.type) {
+                    case 'SET_VISIBILITY_FILTER':
+                        return action.filter;
+                    default:
+                        return state;
+                }
+            };
+
+            const todoApp = (state = {}, action) => {
+                return {
+                    todos: todos(state.todos, action),
+                    visibilityFilter: visibilityFilter(state.visibilityFilter, action)
+                };
+            };
+
+            </pre>
+        </div>
+
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">15. Reducer Composition with combineReducers</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div>
+            <p>Kompozycja funkcji reducer jest na tyle częsta że Redux ma na to pomocniczą funkjcę combineReducers. I tak
+            </p>
+
+            <pre style="background-color: #efefef; font-size: smaller; width: 80%">
+
+             const todoApp = (state = {}, action) => {
+                return {
+                    todos: todos(state.todos, action),
+                    visibilityFilter: visibilityFilter(state.visibilityFilter, action)
+                };
+            };
+
+            </pre>
+            <p>
+                można zastąpić:
+            </p>
+
+            <pre style="background-color: #efefef; font-size: smaller; width: 80%">
+
+             const todoApp = combineReducers({
+                todos,
+                visibilityFilter 
+             });
+
+            </pre>
+
+        </div>
+
+
+        <div style="margin-top: 15px"></div>
+        <h3 class="ui header">
+            <i class="book icon"></i>
+            <div class="content">16. Implementing combineReducers from Scratch</div>
+            <hr style="border: solid 1px gainsboro"/>
+        </h3>
+        <div><a href="javascript:openInNewTab('https://fiddle.jshell.net/donatuss2/apbgut7b/')">Ex01 Przykład Object Reduce </a></div>
+        <div><a href="javascript:openInNewTab('https://fiddle.jshell.net/donatuss2/qwurzfwt/')">Ex01 Przykład CombineReducer stworzonego od zera</a></div>
+        <div>
+            <p>Własna implementacja funkcji combineReducer bazuje na poniższym przykładzie</p>
+            </p>
+
+            <pre style="background-color: #efefef; font-size: smaller; width: 80%">
+
+            const f = (x,y) => {
+              return x + y;
+            };
+
+            const g = (x,y) => {
+              return x * y;
+            };
+
+            const combine1 = (funcs) => {
+              return (x, y) => {
+                 return (x+y) + (x*y)
+              }
+            }
+
+            const combine2 = (funcs) => {
+              return (x, y) => {
+                 return Object.keys(funcs).reduce(
+                   (total, key) => {
+                     total[key] = funcs[key](x,y)
+                     return total;
+                   },
+                   {}
+                 );
+              }
+            }
+            const fg = combine2({f, g});
+            console.log(fg(3,3));
+
+            </pre>
+
+            <p>
+                Stąd własna implementacja
+            </p>
+
+            <pre style="background-color: #efefef; font-size: smaller; width: 80%">
+
+             const combineReducers = (reducers) => {
+                return (state = {}, action) => {
+                    return Object.keys(reducers).reduce(
+                        (totalState, key) => {
+                            totalState[key] = reducers[key](
+                                state[key],
+                                action
+                            );
+                            return totalState;
+                        },
+                        {}
+                    );
+                };
+            };
+            </pre>
+        </div>
+    </div>
+
+    <script>
+        $('.item').click(function () {
+            $('.active').removeClass('active');
+            $(this).addClass('active');
+            $('.tab').removeClass('active');
+
+            if (this.id == 'tab1') {
+                $('.tab1').addClass('active');
+            } else if (this.id == 'tab2') {
+                $('.tab2').addClass('active');
+            } else if (this.id == 'tab3') {
+                $('.tab3').addClass('active');
+            } else if (this.id == 'tab4') {
+                $('.tab4').addClass('active');
+            }
+        });
+    </script>
+
+
+</div>
+</body>
+</html>
