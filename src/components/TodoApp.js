@@ -17,7 +17,6 @@ class TodoApp extends Component {
     }
 
     render() {
-        const store = this.context.store;
 
         return (
             <div>
