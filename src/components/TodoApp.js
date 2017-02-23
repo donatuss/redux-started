@@ -7,17 +7,7 @@ import Footer from './Footer';
 
 class TodoApp extends Component {
 
-    componentWillMount() {
-        const {store} = this.context;
-
-        //callback after action
-        store.subscribe(() => {
-            this.forceUpdate();
-        });
-    }
-
     render() {
-
         return (
             <div>
                 <Container fluid>
