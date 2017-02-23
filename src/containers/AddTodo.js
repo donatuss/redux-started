@@ -4,7 +4,7 @@ import {Button} from 'semantic-ui-react';
 class AddTodo extends Component {
 
     render() {
-        const {store} = this.props;
+        const {store} = this.context;
         const v4 = require('uuid/v4');
         let input;
 
@@ -33,5 +33,9 @@ class AddTodo extends Component {
         );
     }
 }
+
+AddTodo.contextTypes = {
+    store: React.PropTypes.object
+};
 
 export default AddTodo;

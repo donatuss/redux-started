@@ -8,7 +8,7 @@ import Footer from './Footer';
 class TodoApp extends Component {
 
     componentWillMount() {
-        const {store} = this.props;
+        const {store} = this.context;
 
         //callback after action
         store.subscribe(() => {
@@ -17,7 +17,7 @@ class TodoApp extends Component {
     }
 
     render() {
-        const store = this.props.store;
+        const store = this.context.store;
 
         return (
             <div>
@@ -25,19 +25,19 @@ class TodoApp extends Component {
                     <Divider/>
                     <Grid centered columns={2}>
                         <Grid.Column>
-                            <Footer store={store}/>
+                            <Footer/>
                         </Grid.Column>
                     </Grid>
                     <Grid centered columns={2} style={{position: 'relative', top: '-15px'}}>
                         <Grid.Column>
-                            <AddTodo store={store}/>
+                            <AddTodo/>
                         </Grid.Column>
                     </Grid>
                 </Container>
                 <Container>
                     <Grid centered columns={2}>
                         <Grid.Column>
-                            <VisibleTodoList store={store}/>
+                            <VisibleTodoList/>
                         </Grid.Column>
                     </Grid>
                 </Container>
@@ -45,5 +45,9 @@ class TodoApp extends Component {
         )
     }
 }
+
+TodoApp.contextTypes = {
+    store: React.PropTypes.object
+};
 
 export default TodoApp;

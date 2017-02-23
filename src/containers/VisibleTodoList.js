@@ -22,7 +22,7 @@ class VisibleTodoList extends Component {
     };
 
     render() {
-        const {store} = this.props;
+        const {store} = this.context;
         const state = store.getState();
         //todos, onTodoClick
         return (
@@ -41,5 +41,9 @@ class VisibleTodoList extends Component {
         )
     };
 }
+
+VisibleTodoList.contextTypes = {
+    store: React.PropTypes.object
+};
 
 export default VisibleTodoList;

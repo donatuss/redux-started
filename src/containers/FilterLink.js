@@ -5,13 +5,13 @@ import Link from '../components/Link';
 class FilterLink extends Component {
 
     render() {
-        const {filter, store, children} = this.props;
-        const state = store.getState();
+        const {filter, children} = this.props;
+        const {store} = this.context;
 
         return (
             <Link
                 active={
-                    filter === state.visibilityFilter
+                    filter === store.getState().visibilityFilter
                 }
                 onClick={() => {
                     store.dispatch({
@@ -23,5 +23,9 @@ class FilterLink extends Component {
         )
     };
 }
+
+FilterLink.contextTypes = {
+    store: React.PropTypes.object
+};
 
 export default FilterLink;

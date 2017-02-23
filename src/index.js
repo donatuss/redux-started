@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 
 import TodoApp from './components/TodoApp';
 import configureStore from './store/configureStore';
+import Provider from './Provider';
 
 ReactDOM.render(
-    <TodoApp store={configureStore()}/>,
+    <Provider store={configureStore()}>
+        <TodoApp />
+    </Provider>,
     document.getElementById('root')
 );
