@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Button} from 'semantic-ui-react';
 
 class AddTodo extends Component {
 
     render() {
-        const {store} = this.context;
         const v4 = require('uuid/v4');
+        const {dispatch} = this.props;
         let input;
 
         return (
@@ -20,7 +21,7 @@ class AddTodo extends Component {
                 </div>
                 <span style={{width: '5px', display: 'inline-block'}}/>
                 <Button name="btnAddTodo" onClick={() => {
-                    store.dispatch({
+                    dispatch({
                         type: 'ADD_TODO',
                         id: v4(),
                         text: input.value
@@ -34,8 +35,4 @@ class AddTodo extends Component {
     }
 }
 
-AddTodo.contextTypes = {
-    store: React.PropTypes.object
-};
-
-export default AddTodo;
+export default connect()(AddTodo);
