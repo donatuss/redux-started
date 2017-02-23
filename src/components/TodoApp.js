@@ -35,8 +35,4 @@ class TodoApp extends Component {
     }
 }
 
-TodoApp.contextTypes = {
-    store: React.PropTypes.object
-};
-
 export default TodoApp;

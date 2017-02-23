@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'semantic-ui-react';
 
+import {addTodo} from '../actions/todo'
+
 class AddTodo extends Component {
 
     render() {
-        const v4 = require('uuid/v4');
         const {dispatch} = this.props;
         let input;
 
@@ -21,11 +22,7 @@ class AddTodo extends Component {
                 </div>
                 <span style={{width: '5px', display: 'inline-block'}}/>
                 <Button name="btnAddTodo" onClick={() => {
-                    dispatch({
-                        type: 'ADD_TODO',
-                        id: v4(),
-                        text: input.value
-                    });
+                    dispatch(addTodo(input.value));
                     input.value = 'E.' + Math.ceil(1000 * Math.random());
                 }}>
                     AddTodo
